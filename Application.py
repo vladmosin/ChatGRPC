@@ -12,9 +12,9 @@ class ChatWindow:
         self.sender = sender
 
         Grid.columnconfigure(self.frame, 0, weight=2)
-        Grid.columnconfigure(self.frame, 1, weight=1)
+        Grid.columnconfigure(self.frame, 1, weight=0)
         Grid.rowconfigure(self.frame, 0, weight=2)
-        Grid.rowconfigure(self.frame, 1, weight=1)
+        Grid.rowconfigure(self.frame, 1, weight=0)
 
         self.scrollbar = Scrollbar(self.frame)
         self.messages = Listbox(self.frame, yscrollcommand=self.scrollbar.set, height=15, width=50)
