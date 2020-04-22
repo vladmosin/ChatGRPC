@@ -14,13 +14,13 @@ class ChatStub(object):
     Args:
       channel: A grpc.Channel.
     """
-    self.receive_message = channel.unary_stream(
-        '/Chat/receive_message',
+    self.stream = channel.unary_stream(
+        '/grpc.Chat/stream',
         request_serializer=service__pb2.Empty.SerializeToString,
         response_deserializer=service__pb2.Message.FromString,
         )
     self.send_message = channel.unary_unary(
-        '/Chat/send_message',
+        '/grpc.Chat/send_message',
         request_serializer=service__pb2.Message.SerializeToString,
         response_deserializer=service__pb2.Empty.FromString,
         )
@@ -30,7 +30,7 @@ class ChatServicer(object):
   # missing associated documentation comment in .proto file
   pass
 
-  def receive_message(self, request, context):
+  def stream(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -47,8 +47,8 @@ class ChatServicer(object):
 
 def add_ChatServicer_to_server(servicer, server):
   rpc_method_handlers = {
-      'receive_message': grpc.unary_stream_rpc_method_handler(
-          servicer.receive_message,
+      'stream': grpc.unary_stream_rpc_method_handler(
+          servicer.stream,
           request_deserializer=service__pb2.Empty.FromString,
           response_serializer=service__pb2.Message.SerializeToString,
       ),
@@ -59,5 +59,5 @@ def add_ChatServicer_to_server(servicer, server):
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
-      'Chat', rpc_method_handlers)
+      'grpc.Chat', rpc_method_handlers)
   server.add_generic_rpc_handlers((generic_handler,))
