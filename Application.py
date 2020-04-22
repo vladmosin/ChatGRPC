@@ -34,7 +34,6 @@ class ChatWindow:
             self.input_user.set("")
             self.messages.yview(END)
 
-
     def put_message_in_chat(self, message):
         self.messages.insert(END, message)
 
@@ -56,8 +55,10 @@ def client(address, port):
     chat_window = ChatWindow(root, username)
     root.mainloop()
 
+
 def server():
     pass
+
 
 if __name__ == "__main__":
     args = create_parser().parse_args()
@@ -67,5 +68,3 @@ if __name__ == "__main__":
         print("you should specify both address and port or none of them")
     else:
         client(args.address, args.port)
-
-
