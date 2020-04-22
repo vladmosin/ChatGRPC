@@ -5,6 +5,8 @@ import argparse
 import datetime
 from threading import Lock
 
+from Server import serve
+
 
 class ChatWindow:
     def __init__(self, root, username, sender):
@@ -70,15 +72,15 @@ def client(address, port):
     root.mainloop()
 
 
-def server():
-    pass
+def server(port):
+    serve(port)
 
 
 if __name__ == "__main__":
     args = create_parser().parse_args()
-    if args.address is None and args.port is None:
-        server()
-    elif args.address is None or args.port is None:
-        print("you should specify both address and port or none of them")
+    if args.address is None and args.port is not None:
+        server(args.port)
+    elif args.port is None:
+        print("you should specify port")
     else:
         client(args.address, args.port)

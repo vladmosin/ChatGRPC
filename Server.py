@@ -1,3 +1,5 @@
+import time
+
 import grpc
 from concurrent import futures
 
@@ -26,3 +28,6 @@ def serve(port):
     rpc.add_ChatServicer_to_server(Server(), server)
     server.add_insecure_port('[::]:{}'.format(port))
     server.start()
+
+    while True:
+        time.sleep(10000)
