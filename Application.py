@@ -2,12 +2,14 @@ from tkinter import Tk, StringVar, Entry, Frame, Text, LEFT, RIGHT, END, X, Y, B
 from tkinter import N, S, W, E
 
 import argparse
+import datetime
 
 
 class ChatWindow:
-    def __init__(self, root, username):
+    def __init__(self, root, username, sender):
         self.frame = Frame(root)
         self.username = username
+        self.sender = sender
 
         self.scrollbar = Scrollbar(self.frame)
         self.messages = Listbox(self.frame, yscrollcommand=self.scrollbar.set, height=15, width=50)
@@ -27,16 +29,17 @@ class ChatWindow:
 
     def send_message(self):
         input_val = self.input_field.get() 
+        date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         if input_val == "":
             return
-        if True:
-            self.put_message_in_chat(self.username + ": " + input_val)
+        if self.sender(input_val, self.username, date):
+            self.put_message_in_chat(input_val, self.username, date)
             self.input_user.set("")
             self.messages.yview(END)
 
 
-    def put_message_in_chat(self, message):
-        self.messages.insert(END, message)
+    def put_message_in_chat(self, message, username, date):
+        self.messages.insert(END, date + "  " + username + ": " + message)
 
 
 def create_parser():
@@ -53,11 +56,12 @@ def client(address, port):
     username = simpledialog.askstring("Username", "What's your name", parent=root)
     root.deiconify()
 
-    chat_window = ChatWindow(root, username)
+    chat_window = ChatWindow(root, username, lambda a, b, c: True)
     root.mainloop()
 
 def server():
     pass
+
 
 if __name__ == "__main__":
     args = create_parser().parse_args()
