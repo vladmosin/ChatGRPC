@@ -3,6 +3,7 @@ from tkinter import N, S, W, E, Grid
 
 import argparse
 import datetime
+from threading import Lock
 
 from Server import serve
 
@@ -12,6 +13,7 @@ class ChatWindow:
         self.frame = Frame(root)
         self.username = username
         self.sender = sender
+        self.put_message_lock = Lock()
 
         Grid.columnconfigure(self.frame, 0, weight=2)
         Grid.columnconfigure(self.frame, 1, weight=0)
@@ -33,6 +35,9 @@ class ChatWindow:
 
         self.input_field.bind("<Return>", lambda key: self.send_message())
         self.frame.pack(fill=BOTH, expand=YES)
+        self.input_field.focus()
+
+        
 
     def send_message(self):
         input_val = self.input_field.get() 
@@ -45,7 +50,8 @@ class ChatWindow:
             self.messages.yview(END)
 
     def put_message_in_chat(self, message, username, date):
-        self.messages.insert(END, date + "  " + username + ": " + message)
+        with self.put_message_lock:
+            self.messages.insert(END, date + "  " + username + ": " + message)
 
 
 def create_parser():
