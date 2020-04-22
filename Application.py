@@ -47,12 +47,12 @@ class ChatWindow(MessageSubscriber):
         if self.sender(input_val, date, self.username):
             self.put_message_in_chat(input_val, date, self.username, color="blue")
             self.input_user.set("")
-            self.messages.yview(END)
 
     def put_message_in_chat(self, message, date, username, color="red"):
         with self.put_message_lock:
             self.messages.insert(END, date + "  " + username + ": " + message)
             self.messages.itemconfig(END, {"fg": color})
+            self.messages.yview(END)
 
     def receive_message(self, text, date, name):
         self.put_message_in_chat(text, date, name)
