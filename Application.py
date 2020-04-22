@@ -45,7 +45,6 @@ class ChatWindow(MessageSubscriber):
         if input_val == "":
             return
         if self.sender(input_val, date, self.username):
-            self.put_message_in_chat(input_val, date, self.username, color="blue")
             self.input_user.set("")
 
     def put_message_in_chat(self, message, date, username, color="red"):
