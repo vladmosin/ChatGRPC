@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+package grpc;
+
 message Message {
   string text = 1;
   string data = 2;
@@ -9,6 +11,6 @@ message Message {
 message Empty {}
 
 service Chat {
-  rpc receive_message (Empty) returns (stream Message);
+  rpc stream (Empty) returns (stream Message);
   rpc send_message (Message) returns (Empty);
 }
