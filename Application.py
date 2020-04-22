@@ -2,6 +2,9 @@ import argparse
 import datetime
 from tkinter import N, S, W, E, Grid
 from tkinter import Tk, StringVar, Entry, Frame, END, BOTH, Scrollbar, Listbox, Button, simpledialog, YES
+from threading import Lock
+
+from Server import serve
 
 from Client import Client
 from MessageSubscriber import MessageSubscriber
@@ -12,6 +15,7 @@ class ChatWindow(MessageSubscriber):
         self.frame = Frame(root)
         self.username = username
         self.sender = sender
+        self.put_message_lock = Lock()
 
         Grid.columnconfigure(self.frame, 0, weight=2)
         Grid.columnconfigure(self.frame, 1, weight=0)
@@ -33,6 +37,7 @@ class ChatWindow(MessageSubscriber):
 
         self.input_field.bind("<Return>", lambda key: self.send_message())
         self.frame.pack(fill=BOTH, expand=YES)
+        self.input_field.focus()
 
     def send_message(self):
         input_val = self.input_field.get() 
@@ -40,12 +45,14 @@ class ChatWindow(MessageSubscriber):
         if input_val == "":
             return
         if self.sender(input_val, date, self.username):
-            self.put_message_in_chat(input_val, date, self.username)
+            self.put_message_in_chat(input_val, date, self.username, color="blue")
             self.input_user.set("")
             self.messages.yview(END)
 
-    def put_message_in_chat(self, message, date, username):
-        self.messages.insert(END, date + "  " + username + ": " + message)
+    def put_message_in_chat(self, message, date, username, color="red"):
+        with self.put_message_lock:
+            self.messages.insert(END, date + "  " + username + ": " + message)
+            self.messages.itemconfig(END, {"fg": color})
 
     def receive_message(self, text, date, name):
         self.put_message_in_chat(text, date, name)
@@ -72,15 +79,15 @@ def client(address, port):
     root.mainloop()
 
 
-def server():
-    pass
+def server(port):
+    serve(port)
 
 
 if __name__ == "__main__":
     args = create_parser().parse_args()
-    if args.address is None and args.port is None:
-        server()
-    elif args.address is None or args.port is None:
-        print("you should specify both address and port or none of them")
+    if args.address is None and args.port is not None:
+        server(args.port)
+    elif args.port is None:
+        print("you should specify port")
     else:
         client(args.address, args.port)

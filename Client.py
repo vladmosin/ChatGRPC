@@ -20,9 +20,10 @@ class Client:
         for message in self.connection.stream(service_entities.Empty()):
             self.subscriber.receive_message(message.text, message.date, message.name)
 
-    def send_message(self, text, date, name):
+    def send_message(self, text, date, name) -> bool:
         message = service_entities.Message()
         message.text = text
         message.date = date
         message.name = name
         self.connection.send_message(message)
+        return True
