@@ -34,7 +34,6 @@ class ChatWindow:
         self.input_field.bind("<Return>", lambda key: self.send_message())
         self.frame.pack(fill=BOTH, expand=YES)
         self.input_field.focus()
-
         
 
     def send_message(self):
@@ -43,13 +42,14 @@ class ChatWindow:
         if input_val == "":
             return
         if self.sender(input_val, self.username, date):
-            self.put_message_in_chat(input_val, self.username, date)
+            self.put_message_in_chat(input_val, self.username, date, color="blue")
             self.input_user.set("")
             self.messages.yview(END)
 
-    def put_message_in_chat(self, message, username, date):
+    def put_message_in_chat(self, message, username, date, color="red"):
         with self.put_message_lock:
             self.messages.insert(END, date + "  " + username + ": " + message)
+            self.messages.itemconfig(END, {"fg": color})
 
 
 def create_parser():
