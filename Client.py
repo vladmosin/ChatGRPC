@@ -8,8 +8,8 @@ import resources.service_pb2 as service_entities
 
 class Client:
 
-    def __init__(self, subscriber: MessageSubscriber, address: str = 'localhost:11912'):
-        self.subscriber = subscriber
+    def __init__(self, address: str = 'localhost:11912'):
+        self.subsciber = None
         channel = grpc.insecure_channel(address)
         self.connection = rpc.ChatStub(channel)
 
@@ -17,12 +17,12 @@ class Client:
         self.listening_thread.start()
 
     def listen_server_messages(self):
-        for message in self.connection.receive_message(service_entities.Empty()):
-            self.subscriber.receive_message(message)
+        for message in self.connection.stream(service_entities.Empty()):
+            self.subscriber.receive_message(message.text, message.date, message.name)
 
-    def send_message(self, message_text, data, name):
+    def send_message(self, text, date, name):
         message = service_entities.Message()
-        message.text = message_text
-        message.data = data
+        message.text = text
+        message.date = date
         message.name = name
         self.connection.send_message(message)

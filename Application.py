@@ -1,11 +1,13 @@
-from tkinter import Tk, StringVar, Entry, Frame, Text, LEFT, RIGHT, END, X, Y, BOTTOM, BOTH, INSERT, Scrollbar, Listbox, Button, simpledialog, YES
-from tkinter import N, S, W, E, Grid
-
 import argparse
 import datetime
+from tkinter import N, S, W, E, Grid
+from tkinter import Tk, StringVar, Entry, Frame, END, BOTH, Scrollbar, Listbox, Button, simpledialog, YES
+
+from Client import Client
+from MessageSubscriber import MessageSubscriber
 
 
-class ChatWindow:
+class ChatWindow(MessageSubscriber):
     def __init__(self, root, username, sender):
         self.frame = Frame(root)
         self.username = username
@@ -37,13 +39,16 @@ class ChatWindow:
         date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         if input_val == "":
             return
-        if self.sender(input_val, self.username, date):
-            self.put_message_in_chat(input_val, self.username, date)
+        if self.sender(input_val, date, self.username):
+            self.put_message_in_chat(input_val, date, self.username)
             self.input_user.set("")
             self.messages.yview(END)
 
-    def put_message_in_chat(self, message, username, date):
+    def put_message_in_chat(self, message, date, username):
         self.messages.insert(END, date + "  " + username + ": " + message)
+
+    def receive_message(self, text, date, name):
+        self.put_message_in_chat(text, date, name)
 
 
 def create_parser():
@@ -60,7 +65,10 @@ def client(address, port):
     username = simpledialog.askstring("Username", "What's your name", parent=root)
     root.deiconify()
 
-    chat_window = ChatWindow(root, username, lambda a, b, c: True)
+    rpc_client = Client(f'{address}:{port}')
+    chat_window = ChatWindow(root, username, rpc_client.send_message)
+    rpc_client.subscriber = chat_window
+
     root.mainloop()
 
 

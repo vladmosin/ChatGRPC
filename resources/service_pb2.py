@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='grpc',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\rservice.proto\x12\x04grpc\"3\n\x07Message\x12\x0c\n\x04text\x18\x01 \x01(\t\x12\x0c\n\x04\x64\x61ta\x18\x02 \x01(\t\x12\x0c\n\x04name\x18\x03 \x01(\t\"\x07\n\x05\x45mpty2Z\n\x04\x43hat\x12&\n\x06stream\x12\x0b.grpc.Empty\x1a\r.grpc.Message0\x01\x12*\n\x0csend_message\x12\r.grpc.Message\x1a\x0b.grpc.Emptyb\x06proto3')
+  serialized_pb=_b('\n\rservice.proto\x12\x04grpc\"3\n\x07Message\x12\x0c\n\x04text\x18\x01 \x01(\t\x12\x0c\n\x04\x64\x61te\x18\x02 \x01(\t\x12\x0c\n\x04name\x18\x03 \x01(\t\"\x07\n\x05\x45mpty2Z\n\x04\x43hat\x12&\n\x06stream\x12\x0b.grpc.Empty\x1a\r.grpc.Message0\x01\x12*\n\x0csend_message\x12\r.grpc.Message\x1a\x0b.grpc.Emptyb\x06proto3')
 )
 
 
@@ -40,7 +40,7 @@ _MESSAGE = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='data', full_name='grpc.Message.data', index=1,
+      name='date', full_name='grpc.Message.date', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
