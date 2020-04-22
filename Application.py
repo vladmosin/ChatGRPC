@@ -69,6 +69,8 @@ def client(address, port):
     root.title("Chat")
     root.withdraw()
     username = simpledialog.askstring("Username", "What's your name", parent=root)
+    if username is None:
+        return
     root.deiconify()
 
     rpc_client = Client(f'{address}:{port}')
