@@ -16,10 +16,10 @@ _sym_db = _symbol_database.Default()
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='service.proto',
-  package='',
+  package='grpc',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\rservice.proto\"3\n\x07Message\x12\x0c\n\x04text\x18\x01 \x01(\t\x12\x0c\n\x04\x64\x61ta\x18\x02 \x01(\t\x12\x0c\n\x04name\x18\x03 \x01(\t\"\x07\n\x05\x45mpty2O\n\x04\x43hat\x12%\n\x0freceive_message\x12\x06.Empty\x1a\x08.Message0\x01\x12 \n\x0csend_message\x12\x08.Message\x1a\x06.Emptyb\x06proto3')
+  serialized_pb=_b('\n\rservice.proto\x12\x04grpc\"3\n\x07Message\x12\x0c\n\x04text\x18\x01 \x01(\t\x12\x0c\n\x04\x64\x61ta\x18\x02 \x01(\t\x12\x0c\n\x04name\x18\x03 \x01(\t\"\x07\n\x05\x45mpty2Z\n\x04\x43hat\x12&\n\x06stream\x12\x0b.grpc.Empty\x1a\r.grpc.Message0\x01\x12*\n\x0csend_message\x12\r.grpc.Message\x1a\x0b.grpc.Emptyb\x06proto3')
 )
 
 
@@ -27,27 +27,27 @@ DESCRIPTOR = _descriptor.FileDescriptor(
 
 _MESSAGE = _descriptor.Descriptor(
   name='Message',
-  full_name='Message',
+  full_name='grpc.Message',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='text', full_name='Message.text', index=0,
+      name='text', full_name='grpc.Message.text', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='data', full_name='Message.data', index=1,
+      name='data', full_name='grpc.Message.data', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='name', full_name='Message.name', index=2,
+      name='name', full_name='grpc.Message.name', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -65,14 +65,14 @@ _MESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=17,
-  serialized_end=68,
+  serialized_start=23,
+  serialized_end=74,
 )
 
 
 _EMPTY = _descriptor.Descriptor(
   name='Empty',
-  full_name='Empty',
+  full_name='grpc.Empty',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -89,8 +89,8 @@ _EMPTY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=70,
-  serialized_end=77,
+  serialized_start=76,
+  serialized_end=83,
 )
 
 DESCRIPTOR.message_types_by_name['Message'] = _MESSAGE
@@ -100,14 +100,14 @@ _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 Message = _reflection.GeneratedProtocolMessageType('Message', (_message.Message,), dict(
   DESCRIPTOR = _MESSAGE,
   __module__ = 'service_pb2'
-  # @@protoc_insertion_point(class_scope:Message)
+  # @@protoc_insertion_point(class_scope:grpc.Message)
   ))
 _sym_db.RegisterMessage(Message)
 
 Empty = _reflection.GeneratedProtocolMessageType('Empty', (_message.Message,), dict(
   DESCRIPTOR = _EMPTY,
   __module__ = 'service_pb2'
-  # @@protoc_insertion_point(class_scope:Empty)
+  # @@protoc_insertion_point(class_scope:grpc.Empty)
   ))
 _sym_db.RegisterMessage(Empty)
 
@@ -115,16 +115,16 @@ _sym_db.RegisterMessage(Empty)
 
 _CHAT = _descriptor.ServiceDescriptor(
   name='Chat',
-  full_name='Chat',
+  full_name='grpc.Chat',
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=79,
-  serialized_end=158,
+  serialized_start=85,
+  serialized_end=175,
   methods=[
   _descriptor.MethodDescriptor(
-    name='receive_message',
-    full_name='Chat.receive_message',
+    name='stream',
+    full_name='grpc.Chat.stream',
     index=0,
     containing_service=None,
     input_type=_EMPTY,
@@ -133,7 +133,7 @@ _CHAT = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='send_message',
-    full_name='Chat.send_message',
+    full_name='grpc.Chat.send_message',
     index=1,
     containing_service=None,
     input_type=_MESSAGE,
