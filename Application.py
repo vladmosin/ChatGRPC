@@ -1,5 +1,5 @@
-from tkinter import Tk, StringVar, Entry, Frame, Text, LEFT, RIGHT, END, X, Y, BOTTOM, BOTH, INSERT, Scrollbar, Listbox, Button, simpledialog
-from tkinter import N, S, W, E
+from tkinter import Tk, StringVar, Entry, Frame, Text, LEFT, RIGHT, END, X, Y, BOTTOM, BOTH, INSERT, Scrollbar, Listbox, Button, simpledialog, YES
+from tkinter import N, S, W, E, Grid
 
 import argparse
 import datetime
@@ -11,21 +11,26 @@ class ChatWindow:
         self.username = username
         self.sender = sender
 
+        Grid.columnconfigure(self.frame, 0, weight=2)
+        Grid.columnconfigure(self.frame, 1, weight=1)
+        Grid.rowconfigure(self.frame, 0, weight=2)
+        Grid.rowconfigure(self.frame, 1, weight=1)
+
         self.scrollbar = Scrollbar(self.frame)
         self.messages = Listbox(self.frame, yscrollcommand=self.scrollbar.set, height=15, width=50)
         self.scrollbar.grid(row=0, column=1, sticky=N+S)
-        self.messages.grid(row=0, column=0)
+        self.messages.grid(row=0, column=0, sticky=N+S+W+E)
         self.scrollbar.config(command = self.messages.yview)
 
         self.input_user = StringVar()
         self.input_field = Entry(self.frame, text=self.input_user)
-        self.input_field.grid(row=1, column=0, sticky=W+E)
+        self.input_field.grid(row=1, column=0, sticky=W+E+S)
 
         self.send_button = Button(self.frame, text="Send", command=self.send_message)
-        self.send_button.grid(row=1, column=1)
+        self.send_button.grid(row=1, column=1, sticky=S)
 
         self.input_field.bind("<Return>", lambda key: self.send_message())
-        self.frame.pack()
+        self.frame.pack(fill=BOTH, expand=YES)
 
     def send_message(self):
         input_val = self.input_field.get() 
