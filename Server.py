@@ -13,10 +13,11 @@ class Server(rpc.ChatServicer):
 
     def stream(self, request, context):
         processed = 0
-        while processed < len(self.chats):
-            chat = self.chats[processed]
-            processed += 1
-            yield chat
+        while True:
+            while processed < len(self.chats):
+                chat = self.chats[processed]
+                processed += 1
+                yield chat
 
     def send_message(self, message, context):
         self.chats.append(message)
